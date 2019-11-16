@@ -6,3 +6,4 @@ ostrain.py
 model/*
 data/*
 cache
+.gitignore

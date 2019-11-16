@@ -1,8 +1,8 @@
 # RSNA Intracranial Hemorrhage Detection
 
-This is the project for [RSNA Intracranial Hemorrhage Detection](https://www.kaggle.com/c/rsna-intracranial-hemorrhage-detection) hosted on Kaggle in 2019. The code was mostly from [appian42](https://github.com/appian42/kaggle-rsna-intracranial-hemorrhage). However, I have changed the augmentation methods and network backbone, ensembling three different models and achieveing about 0.065 on Public Leaderboard.
+This is the project for [RSNA Intracranial Hemorrhage Detection](https://www.kaggle.com/c/rsna-intracranial-hemorrhage-detection) hosted on Kaggle in 2019. The code was mostly from [appian42](https://github.com/appian42/kaggle-rsna-intracranial-hemorrhage). However, I have changed the augmentation methods, learning rate and network backbone, ensembling three different models and achieveing about 0.065 on Public Leaderboard. In stage2, this code can get into the silver medal area.(58th, Private Leaderboard:0.05517)
 
-
+PS: In fact, the key point of entering the gold medal area is to use level information and do post-processing. Because doctors annotate layers by layers, they often mark the same label in successive layers. The information of the upper and lower layers of the target is very important for the prediction of the target label. And the post-processing I tried is just network architecture refinement and post-processing based on the logical relationship between `any` column and other `phenotype` columns, which didn't improve the score in my experiment. This is the gap between me and the gold medal area players.
 
 ## Requirements
 
@@ -10,6 +10,8 @@ This is the project for [RSNA Intracranial Hemorrhage Detection](https://www.kag
 - [Pytorch](https://pytorch.org/) 1.1.0
 - [NVIDIA apex](https://github.com/NVIDIA/apex) 0.1 (for mixed precision training)
 - [efficientnet-pytorch](https://github.com/lukemelas/EfficientNet-PyTorch) 0.5.1
+
+The details of python packages can be seen in the `requirements.txt`.
 
 ## Performance (Single model)
 
@@ -80,4 +82,4 @@ $ sh ./bin/predict001-ep2-efficientnet-b3.sh
 
 ## Ensembling
 
-`testmerge.py` will firstly average over each well-trained model(average over 5 folds). Then it will use weight average three models(resnet34, resnext50, efficientnet-b3). The weights are [0.2,0.5,0.3] or [0.3,0.4,0.3].
+`testmerge.py` will firstly average over each well-trained model(average over 5 folds). Then it will use weight average three models(resnet34, resnext50, efficientnet-b3). The weights are [0.15,0.5,0.35] or [0.3,0.4,0.3].
