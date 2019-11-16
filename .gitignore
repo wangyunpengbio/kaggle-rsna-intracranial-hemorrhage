@@ -1,0 +1,8 @@
+*.csv
+*.log
+*.ipynb
+*.out
+ostrain.py
+model/*
+data/*
+cache
